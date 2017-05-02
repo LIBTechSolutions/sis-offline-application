@@ -1,0 +1,93 @@
+{
+  "name": "sis-offline-application",
+  "productName": "SIS Offline Application",
+  "version": "1.0.0",
+  "author": "Israel Z. Kollie",
+  "license": "ISC",
+  "description": "Liberia SIS Offline Application",
+  "main": "app/index.js",
+  "scripts": {
+    "test": "karma start",
+    "build": "cross-env NODE_ENV=production webpack",
+    "watch": "cross-env NODE_ENV=production webpack -w",
+    "dev-server": "webpack-dev-server",
+    "dev-app": "electron .",
+    "start": "cross-env NODE_ENV=production electron .",
+    "lint": "standard",
+    "dist": "build -w --x64"
+  },
+  "build": {
+    "productName": "SIS Offline Application",
+    "appId": "com.sis.SIS",
+    "asar": true,
+    "companyName": "Techsol",
+    "copyright": "Copyright © 2017 Techsol",
+    "squirrelWindows": {
+      "iconUrl": "http://localhost:3000/"
+    },
+    "win": {
+      "publish": {
+        "provider": "generic",
+        "url": "http://localhost:3000/"
+      },
+      "icon": "resources/eidsr-icon.ico",
+      "target": "squirrel"
+    }
+  },
+  "dependencies": {
+    "axios": "^0.15.2",
+    "classnames": "^2.2.5",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^1.10.2",
+    "express": "^4.14.0",
+    "immutability-helper": "^2.1.1",
+    "jquery": "^3.2.1",
+    "json-loader": "^0.5.4",
+    "node-xlsx": "^0.7.4",
+    "react": "^15.4.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-tap-event-plugin": "^2.0.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-react-html-attrs": "^2.0.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.22.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "cross-env": "^3.1.4",
+    "css-loader": "^0.26.4",
+    "electron": "^1.6.6",
+    "electron-builder": "^15.6.1",
+    "electron-builder-squirrel-windows": "^17.0.1",
+    "electron-css-reload": "^1.0.6",
+    "expect": "^1.20.2",
+    "expose-loader": "^0.7.3",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.9.0",
+    "foundation-sites": "^6.3.1",
+    "imports-loader": "^0.7.1",
+    "karma": "^1.4.1",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.2",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.2",
+    "mocha": "^3.2.0",
+    "node-sass": "^4.5.2",
+    "node-uuid": "^1.4.8",
+    "react-hot-loader": "^1.3.0",
+    "sass-loader": "^6.0.3",
+    "script-loader": "^0.7.0",
+    "standard": "^8.6.0",
+    "style-loader": "^0.16.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-node-externals": "^1.5.4"
+  }
+}

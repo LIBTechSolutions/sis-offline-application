@@ -1,0 +1,26 @@
+.form {
+  background: $light-grey;
+  border: 2px solid $light-grey-border;
+  border-radius: 5px;
+  padding: 0;
+  margin-bottom: 2rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  border-top: 1px solid $light-grey-border;
+  padding: 1rem 1rem 0 1rem;
+}
+
+.filter {
+  margin-top: 10rem;
+}
+
+.data {
+  border: 2px solid #586093;
+  padding: 1rem 1rem 0 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 50%;
+}
