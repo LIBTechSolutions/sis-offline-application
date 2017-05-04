@@ -2,7 +2,7 @@
   "name": "sis-offline-application",
   "productName": "SIS Offline Application",
   "version": "1.0.0",
-  "author": "Israel Z. Kollie",
+  "author": "Techsol",
   "license": "ISC",
   "description": "Liberia SIS Offline Application",
   "main": "app/index.js",
@@ -20,7 +20,6 @@
     "productName": "SIS Offline Application",
     "appId": "com.sis.SIS",
     "asar": true,
-    "companyName": "Techsol",
     "copyright": "Copyright © 2017 Techsol",
     "squirrelWindows": {
       "iconUrl": "http://localhost:3000/"
@@ -30,7 +29,7 @@
         "provider": "generic",
         "url": "http://localhost:3000/"
       },
-      "icon": "resources/eidsr-icon.ico",
+      "icon": "resources/techsol_new_logo_z7z_icon.ico",
       "target": "squirrel"
     }
   },
