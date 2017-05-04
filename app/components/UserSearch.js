@@ -10,15 +10,15 @@ export default class UserSearch extends React.Component {
   }
 
   handleSearch () {
-      let searchText = this.refs.searchText.value
+    let searchText = this.refs.searchText.value
 
-      this.props.onSearch(searchText)
-    }
+    this.props.onSearch(searchText)
+  }
 
   render () {
     return (
       <div className='search'>
-          <input type='search' ref='searchText' placeholder='Search Items' onChange={this.handleSearch}/>
+        <input type='search' ref='searchText' placeholder='Search Items' onChange={this.handleSearch} />
       </div>
     )
   }

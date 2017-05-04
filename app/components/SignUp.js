@@ -15,9 +15,8 @@ export default class SignUp extends React.Component {
     }
     this.handleUsers = this.handleUsers.bind(this)
   }
-  componentDidUpdate (){
+  componentDidUpdate () {
     setUsers(this.state.users)
-
   }
   handleSearch (showCompleted, searchText) {
     this.setState({
@@ -48,12 +47,12 @@ export default class SignUp extends React.Component {
     return (
       <div>
         <h1 className='page-title'>Sign Up Now</h1>
-          <div className='row'>
-            <div className='data'>
-              <UserList users={filteredUsers} />
-            </div>
+        <div className='row'>
+          <div className='data'>
+            <UserList users={filteredUsers} />
           </div>
-            <SignUpForm onAddValue={this.handleUsers}/>
+        </div>
+        <SignUpForm onAddValue={this.handleUsers} />
       </div>
     )
   }
