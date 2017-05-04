@@ -49,7 +49,7 @@ export default class SignUpForm extends React.Component {
                 <input type='text' ref='yourName' placeholder='Your Name' />
                 <input type='text' ref='userName' placeholder='Username' />
                 <input type='email' ref='email' placeholder='Email' />
-                <input type='text' ref='phoneNumber' placeholder='Phone Number' />
+                <input type='text' ref='phoneNumber' placeholder='Phone' />
                 <input type='password' ref='password' placeholder='Password' />
                 <input type='password' ref='reenterPassword' placeholder='Re-enter Password' />
                 <button className='button expanded'>Signup</button>
