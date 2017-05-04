@@ -2,7 +2,7 @@
 
 import React from 'react'
 import SignUpForm from 'SignUpForm'
-import uuid from 'node-uuid'
+import uuid from 'uuid'
 import {setUsers, getUsers, filterUsers} from 'UsersApi'
 import UserList from 'UserList'
 
