@@ -2,7 +2,7 @@
 
 import React from 'react'
 import SignUpForm from 'SignUpForm'
-import uuid from 'uuid'
+import uuid from 'uuid/v4'
 import {setUsers, getUsers, filterUsers} from 'UsersApi'
 import UserList from 'UserList'
 

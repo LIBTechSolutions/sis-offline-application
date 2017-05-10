@@ -9,7 +9,7 @@ function setMainMenu () {
           label: 'Registration',
           accelerator: 'CmdOrCtrl+R',
           click () {
-            console.log('Oh, hey there!')
+            console.log('Oh, hey!')
           }
         },
         {

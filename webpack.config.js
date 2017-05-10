@@ -9,8 +9,8 @@ const extractSass = new ExtractTextPlugin({
 
 module.exports = {
   entry: [
-    './app/app.js',
     'script-loader!jquery/dist/jquery.min.js',
+    './app/app.js',
     'script-loader!foundation-sites/dist/js/foundation.min.js'
   ],
   devtool: 'eval-source-map',
