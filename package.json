@@ -2,12 +2,11 @@
   "name": "sis-offline-application",
   "productName": "SIS Offline Application",
   "version": "1.0.0",
-  "author": "Israel Z. Kollie",
+  "author": "Techsol",
   "license": "ISC",
   "description": "Liberia SIS Offline Application",
   "main": "app/index.js",
   "scripts": {
-    "test": "karma start",
     "build": "cross-env NODE_ENV=production webpack",
     "watch": "cross-env NODE_ENV=production webpack -w",
     "dev-server": "webpack-dev-server",
@@ -20,7 +19,6 @@
     "productName": "SIS Offline Application",
     "appId": "com.sis.SIS",
     "asar": true,
-    "companyName": "Techsol",
     "copyright": "Copyright © 2017 Techsol",
     "squirrelWindows": {
       "iconUrl": "http://localhost:3000/"
@@ -30,7 +28,7 @@
         "provider": "generic",
         "url": "http://localhost:3000/"
       },
-      "icon": "resources/eidsr-icon.ico",
+      "icon": "resources/techsol_new_logo_z7z_icon.ico",
       "target": "squirrel"
     }
   },
@@ -40,13 +38,15 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-updater": "^1.10.2",
     "express": "^4.14.0",
-    "immutability-helper": "^2.1.1",
+    "immutability-helper": "^2.2.0",
     "jquery": "^3.2.1",
     "json-loader": "^0.5.4",
+    "moment": "^2.18.1",
     "node-xlsx": "^0.7.4",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-router": "^4.1.1",
     "react-tap-event-plugin": "^2.0.1"
   },
   "devDependencies": {
@@ -79,13 +79,13 @@
     "karma-webpack": "^2.0.2",
     "mocha": "^3.2.0",
     "node-sass": "^4.5.2",
-    "node-uuid": "^1.4.8",
     "react-hot-loader": "^1.3.0",
     "sass-loader": "^6.0.3",
     "script-loader": "^0.7.0",
     "standard": "^8.6.0",
     "style-loader": "^0.16.1",
     "url-loader": "^0.5.7",
+    "uuid": "^3.0.1",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^1.14.1",
     "webpack-node-externals": "^1.5.4"

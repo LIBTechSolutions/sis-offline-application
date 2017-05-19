@@ -2,19 +2,24 @@
 
 import React from 'react'
 import { render } from 'react-dom'
-import SignUp from 'SignUp'
+import Header from 'Header'
 
+// Load foundations
+import 'jquery'
+import 'foundation-sites'
 
+$(document).ready(function ($) {
+  $(document).foundation();
+})
 
 
 // app css
-require('applicationStyles');
-
+require('applicationStyles')
 
 
 render(
   <div>
-    <SignUp />
+    <Header />
   </div>,
   document.getElementById('app')
-);
+)
