@@ -2,33 +2,37 @@
 
 import React from 'react'
 import GradeInfo from 'GradeInfo'
-import {setUsers, getUsers, filterUsers} from 'UsersApi'
-import UserList from 'UserList'
+
 
 export default class GradeForm extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      grade: getUsers()
-    }
+
     this.submitInfo = this.submitInfo.bind(this)
-  }
-  componentDidUpdate () {
-    setUsers(this.state.grade)
+    this.schoolDb = this.props.schoolDb
   }
 
   submitInfo (event) {
     event.preventDefault()
+
     let gradeInfo = Object.assign({}, this.props.grade)
 
-    this.setState({
-      grade: [
-        ...this.state.grade,
-        {gradeInfo}
-      ]
+    if (!gradeInfo._id) {
+      gradeInfo._id = gradeInfo.id
+    }
 
+    console.log('About to post to pouch...', gradeInfo._id)
+
+    // Save to pouchdb
+    this.schoolDb.put(gradeInfo, (err, result) => {
+      if (!err) {
+        console.log('Successfully posted to pouchdb!')
+        this.props.clearCurrentGrade()
+      } else {
+        console.log('Error saving to pouch...')
+        console.log(err)
+      }
     })
-    this.props.clearCurrentGrade()
   }
 
 

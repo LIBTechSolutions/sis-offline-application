@@ -4,6 +4,7 @@ import React from 'react'
 import Registration from 'Registration'
 import Fees from 'Fees'
 import Grade from 'Grade'
+import GradeData from 'GradeDataPage'
 
 
 export default class Header extends React.Component {
@@ -12,11 +13,13 @@ export default class Header extends React.Component {
     this.state = {
       registration: false,
       fee: false,
-      grade: false
+      grade: false,
+      gradedata: false
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleFee = this.handleFee.bind(this)
     this.handleGrade = this.handleGrade.bind(this)
+    this.handleGradeData = this.handleGradeData.bind(this)
   }
 
   handleFee () {
@@ -38,6 +41,11 @@ export default class Header extends React.Component {
       grade: true,
       registration: false,
       fee: false
+    })
+  }
+  handleGradeData () {
+    this.setState({
+      gradedata: true
     })
   }
 
@@ -70,7 +78,7 @@ export default class Header extends React.Component {
     				    <ul className='menu'>
     				      <li><button className='button' type='button'>Registration</button></li>
     				      <li><button className='button' type='button'>Fee</button></li>
-    				      <li><button className='button' type='button'>Grade</button></li>
+    				      <li><button className='button' type='button' onClick={this.handleGradeData}>Grade</button></li>
     				    </ul>
     				  </li>
     				</ul>
@@ -79,9 +87,10 @@ export default class Header extends React.Component {
       		</div>
       </div>
       <div className='school-data'>
-        {this.state.registration ? <Registration/>: null}
-        {this.state.fee ? <Fees/>: null}
-        {this.state.grade ? <Grade/>: null}
+        {this.state.registration ? <Registration schoolDb={this.schoolDb} {...this.props}/>: null}
+        {this.state.fee ? <Fees schoolDb={this.schoolDb} {...this.props}/>: null}
+        {this.state.grade ? <Grade schoolDb={this.schoolDb} {...this.props}/>: null}
+        {this.state.gradedata ? <GradeData schoolDb={this.schoolDb} {...this.props} {...this.props}/>: null}
       </div>
     </div>
     )

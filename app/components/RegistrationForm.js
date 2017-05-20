@@ -2,34 +2,38 @@
 
 import React from 'react'
 import RegistrationInfo from 'RegistrationInfo'
-import {setUsers, getUsers, filterUsers} from 'UsersApi'
-import UserList from 'UserList'
 
 export default class RegistrationForm extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      school: getUsers()
-    }
     this.submitInfo = this.submitInfo.bind(this)
+    this.schoolDb = this.props.schoolDb
   }
-  componentDidUpdate () {
-    setUsers(this.state.school)
-  }
+
 
   submitInfo (event) {
     event.preventDefault()
+
     let regInfo = Object.assign({}, this.props.school)
 
-    this.setState({
-      school: [
-        ...this.state.school,
-        {regInfo}
-      ]
+    if (!regInfo._id) {
+      regInfo._id = regInfo.id
+    }
 
+    console.log('About to post to pouch...', regInfo._id)
+
+    // Save to pouchdb
+    this.schoolDb.put(regInfo, (err, result) => {
+      if (!err) {
+        console.log('Successfully posted to pouchdb!')
+        this.props.clearCurrentSchool()
+      } else {
+        console.log('Error saving to pouch...')
+        console.log(err)
+      }
     })
-    this.props.clearCurrentSchool()
   }
+
 
 
 

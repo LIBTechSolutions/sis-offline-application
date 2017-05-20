@@ -20,5 +20,8 @@
       "Grade Eleven": "Grade Eleven",
       "Grade Twelve": "Grade Twelve"
     }
+  },
+  "db": {
+    "local": "sisdb"
   }
 }

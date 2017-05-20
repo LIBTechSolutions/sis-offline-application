@@ -1,8 +1,12 @@
 'use strict'
 
 import React from 'react'
+import pouchdb from 'pouchdb-browser'
 import { render } from 'react-dom'
 import Header from 'Header'
+
+import config from '../conf.json'
+
 
 // Load foundations
 import 'jquery'
@@ -12,6 +16,8 @@ $(document).ready(function ($) {
   $(document).foundation();
 })
 
+const schoolDb = new pouchdb(config.db.local)
+
 
 // app css
 require('applicationStyles')
@@ -19,7 +25,9 @@ require('applicationStyles')
 
 render(
   <div>
-    <Header />
+    <Header
+      schoolDb={schoolDb}
+      />
   </div>,
   document.getElementById('app')
 )
