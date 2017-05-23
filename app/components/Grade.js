@@ -35,7 +35,7 @@ export default class Grade extends React.Component {
   }
 
   this.state = {
-    grade: this.newGrade,
+    doc: this.newGrade,
     edit: false
   }
     this.viewGrade = this.viewGrade.bind(this)
@@ -44,8 +44,8 @@ export default class Grade extends React.Component {
     this.clearCurrentGrade = this.clearCurrentGrade.bind(this)
 }
 
-viewGrade (grade) {
-  return (e) => this.setState({grade, edit: false})
+viewGrade (doc) {
+  return (e) => this.setState({doc, edit: false})
 }
 
 updateGrade (section) {
@@ -57,14 +57,14 @@ updateGrade (section) {
                 : e.target.value
 
       this.setState((prevState, props) => {
-        let grade = {}
-        grade[section] = {}
-        grade[section][key] = {$set: value}
+        let doc = {}
+        doc[section] = {}
+        doc[section][key] = {$set: value}
 
         for (let prop in dependentProps) {
-          grade[section][prop] = {$set: dependentProps[prop][value]}
+          doc[section][prop] = {$set: dependentProps[prop][value]}
         }
-        return update(prevState, {grade})
+        return update(prevState, {doc})
       })
     }
   }
@@ -72,14 +72,14 @@ updateGrade (section) {
 
 updateGradeState (stateUpdates) {
   this.setState((prevState, props) => {
-    return update(prevState, {grade: stateUpdates})
+    return update(prevState, {doc: stateUpdates})
   })
 }
 
 clearCurrentGrade () {
     window.scrollTo(0, 0)
     this.setState({
-      grade: this.newGrade,
+      doc: this.newGrade,
       edit: true,
       newInfo: true,
       view: 'split-view'

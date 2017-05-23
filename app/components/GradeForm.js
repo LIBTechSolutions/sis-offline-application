@@ -15,7 +15,7 @@ export default class GradeForm extends React.Component {
   submitInfo (event) {
     event.preventDefault()
 
-    let gradeInfo = Object.assign({}, this.props.grade)
+    let gradeInfo = Object.assign({}, this.props.doc)
 
     if (!gradeInfo._id) {
       gradeInfo._id = gradeInfo.id
@@ -39,7 +39,7 @@ export default class GradeForm extends React.Component {
 
   render () {
     let {
-      grade,
+      doc,
       edit,
       updateGrade,
       updateGradeState,
@@ -51,7 +51,7 @@ export default class GradeForm extends React.Component {
             <div className='container'>
         <form action='' onSubmit={this.submitInfo}>
           <div className='student-form__container'>
-          <GradeInfo edit={edit} handleChange={updateGrade('GradeInfo')} {...grade.GradeInfo} />
+          <GradeInfo edit={edit} handleChange={updateGrade('GradeInfo')} {...doc.GradeInfo} />
           <button className='button expanded' type='submit'>Save</button>
           </div>
         </form>

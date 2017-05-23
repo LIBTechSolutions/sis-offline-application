@@ -4,7 +4,7 @@ export default class GradeData extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {grades: []}
+    this.state = {docs: []}
     this.schoolDb = this.props.schoolDb
   }
 
@@ -22,8 +22,8 @@ export default class GradeData extends React.Component {
 
   updateGrades () {
     this.schoolDb.allDocs({include_docs: true}).then((res) => {
-      var grades = res.rows.map((row) => row.grade)
-      this.setState({grades})
+      var docs = res.rows.map((row) => row.doc)
+      this.setState({docs})
     })
   }
 
@@ -44,7 +44,7 @@ export default class GradeData extends React.Component {
             </thead>
 
             <tbody>
-              {this.state.grades.map((grade) => <DataRow key={grade._id} grade={grade} {...this.props} />)}
+              {this.state.docs.map((doc) => <DataRow key={doc._id} doc={doc} {...this.props} />)}
             </tbody>
           </table>
         </div>
@@ -55,13 +55,13 @@ export default class GradeData extends React.Component {
 
 class DataRow extends React.Component {
   render () {
-    let {grade} = this.props
+    let {doc} = this.props
 
     return (
       <tr >
-        <td>{grade.GradeInfo['studentID']}</td>
-        <td>{grade.GradeInfo['semester']}</td>
-        <td>{grade.GradeInfo['period']}</td>
+        <td>{doc.GradeInfo['studentID']}</td>
+        <td>{doc.GradeInfo['semester']}</td>
+        <td>{doc.GradeInfo['period']}</td>
       </tr>
     )
   }

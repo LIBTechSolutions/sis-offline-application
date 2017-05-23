@@ -22,6 +22,6 @@
     }
   },
   "db": {
-    "local": "sisdb"
+    "local": "sisdb01"
   }
 }

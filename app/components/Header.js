@@ -90,7 +90,7 @@ export default class Header extends React.Component {
         {this.state.registration ? <Registration schoolDb={this.schoolDb} {...this.props}/>: null}
         {this.state.fee ? <Fees schoolDb={this.schoolDb} {...this.props}/>: null}
         {this.state.grade ? <Grade schoolDb={this.schoolDb} {...this.props}/>: null}
-        {this.state.gradedata ? <GradeData schoolDb={this.schoolDb} {...this.props} {...this.props}/>: null}
+        {this.state.gradedata ? <GradeData schoolDb={this.schoolDb} viewGrade={this.viewGrade} {...this.props}/>: null}
       </div>
     </div>
     )
