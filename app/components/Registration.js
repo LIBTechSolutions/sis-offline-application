@@ -5,56 +5,33 @@ import update from 'immutability-helper'
 import uuid from 'uuid/v4'
 import {toDate} from '../utils'
 import RegistrationForm from 'RegistrationForm'
+import {SchoolData} from '../schoolData'
 
 
 
 export default class Registration extends React.Component {
   constructor (props) {
     super(props)
-
-    this.newSchool = {
-      'id': uuid(),
-      'createdAt': toDate(),
-      RegistrationInfo: {
-        'registrationtype': '',
-        'firstname': '',
-        'middlename': '',
-        'lastname': '',
-        'dob': '',
-        'nationality': '',
-        'sex': '',
-        'email': '',
-        'phone': '',
-        'emcontactname': '',
-        'emcontactnum': '',
-        'prevschool': '',
-        'Current Class': '',
-        'parentguardian': '',
-        'parentguardianphone': '',
-        'Position': '',
-        'qualification': '',
-        'experience': '',
-        'license': '',
-        'subject': '',
-        'gradeeleven': ''
+    this.state = {
+      schoolInfo: SchoolData(),
+      edit: false
     }
-  }
-
-  this.state = {
-    school: this.newSchool,
-    edit: false
-  }
-    this.viewSchool = this.viewSchool.bind(this)
-    this.updateSchool = this.updateSchool.bind(this)
+    this.viewDoc = this.viewDoc.bind(this)
+    this.updateDoc = this.updateDoc.bind(this)
     this.updateState = this.updateState.bind(this)
-    this.clearCurrentSchool = this.clearCurrentSchool.bind(this)
+    this.clearCurrentDoc = this.clearCurrentDoc.bind(this)
+
+  }
+
+
+
+
+
+viewDoc (schoolInfo) {
+  return (e) => this.setState({schoolInfo, edit: false})
 }
 
-viewSchool (school) {
-  return (e) => this.setState({school, edit: false})
-}
-
-updateSchool (section) {
+updateDoc (section) {
   return (dependentProps) => {
     return (e) => {
       let key = e.target.name
@@ -63,14 +40,14 @@ updateSchool (section) {
                 : e.target.value
 
       this.setState((prevState, props) => {
-        let school = {}
-        school[section] = {}
-        school[section][key] = {$set: value}
+        let schoolInfo = {}
+        schoolInfo[section] = {}
+        schoolInfo[section][key] = {$set: value}
 
         for (let prop in dependentProps) {
-          school[section][prop] = {$set: dependentProps[prop][value]}
+          schoolInfo[section][prop] = {$set: dependentProps[prop][value]}
         }
-        return update(prevState, {school})
+        return update(prevState, {schoolInfo})
       })
     }
   }
@@ -78,14 +55,14 @@ updateSchool (section) {
 
 updateState (stateUpdates) {
   this.setState((prevState, props) => {
-    return update(prevState, {school: stateUpdates})
+    return update(prevState, {schoolInfo: stateUpdates})
   })
 }
 
-clearCurrentSchool () {
+clearCurrentDoc () {
     window.scrollTo(0, 0)
     this.setState({
-      school: this.newSchool,
+      schoolInfo: SchoolData(),
       edit: true,
       newInfo: true,
       view: 'split-view'
@@ -97,9 +74,9 @@ clearCurrentSchool () {
     return (
         <div id='register' className='register'>
         <RegistrationForm
-            updateSchool={this.updateSchool}
+            updateDoc={this.updateDoc}
             updateState={this.updateState}
-            clearCurrentSchool={this.clearCurrentSchool}
+            clearCurrentDoc={this.clearCurrentDoc}
             {...this.state}
             {...this.props} />
         </div>

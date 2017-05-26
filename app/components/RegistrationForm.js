@@ -14,19 +14,19 @@ export default class RegistrationForm extends React.Component {
   submitInfo (event) {
     event.preventDefault()
 
-    let regInfo = Object.assign({}, this.props.school)
+    let schoolData = Object.assign({}, this.props.schoolInfo)
 
-    if (!regInfo._id) {
-      regInfo._id = regInfo.id
+    if (!schoolData._id) {
+      schoolData._id = schoolData.id
     }
 
-    console.log('About to post to pouch...', regInfo._id)
+    console.log('About to post to pouch...', schoolData._id)
 
     // Save to pouchdb
-    this.schoolDb.put(regInfo, (err, result) => {
+    this.schoolDb.put(schoolData, (err, result) => {
       if (!err) {
         console.log('Successfully posted to pouchdb!')
-        this.props.clearCurrentSchool()
+        this.props.clearCurrentDoc()
       } else {
         console.log('Error saving to pouch...')
         console.log(err)
@@ -39,16 +39,16 @@ export default class RegistrationForm extends React.Component {
 
   render () {
     let {
-      school,
+      schoolInfo,
       edit,
-      updateSchool,
+      updateDoc,
       updateState
     } = this.props
     return (
       <div className='student-form'>
         <form action='' onSubmit={this.submitInfo}>
           <div className='student-form__container'>
-          <RegistrationInfo edit={edit} handleChange={updateSchool('RegistrationInfo')} {...school.RegistrationInfo} />
+          <RegistrationInfo edit={edit} handleChange={updateDoc('RegistrationInfo')} {...schoolInfo.RegistrationInfo} />
           <button className='button expanded' type='submit'>Save</button>
           </div>
         </form>
