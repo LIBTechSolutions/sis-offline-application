@@ -24,20 +24,20 @@ export default class Fees extends React.Component {
   }
 
   this.state = {
-    fee: this.newFee,
+    doc: this.newFee,
     edit: false
   }
-    this.viewFee = this.viewFee.bind(this)
-    this.updateFee = this.updateFee.bind(this)
-    this.updateFeeState = this.updateFeeState.bind(this)
-    this.clearCurrentFee = this.clearCurrentFee.bind(this)
+    this.viewDoc = this.viewDoc.bind(this)
+    this.updateDoc = this.updateDoc.bind(this)
+    this.updateState = this.updateState.bind(this)
+    this.clearCurrentDoc = this.clearCurrentDoc.bind(this)
 }
 
-viewFee (fee) {
-  return (e) => this.setState({fee, edit: false})
+viewDoc (doc) {
+  return (e) => this.setState({doc, edit: false})
 }
 
-updateFee (section) {
+updateDoc (section) {
   return (dependentProps) => {
     return (e) => {
       let key = e.target.name
@@ -46,29 +46,29 @@ updateFee (section) {
                 : e.target.value
 
       this.setState((prevState, props) => {
-        let fee = {}
-        fee[section] = {}
-        fee[section][key] = {$set: value}
+        let doc = {}
+        doc[section] = {}
+        doc[section][key] = {$set: value}
 
         for (let prop in dependentProps) {
-          fee[section][prop] = {$set: dependentProps[prop][value]}
+          doc[section][prop] = {$set: dependentProps[prop][value]}
         }
-        return update(prevState, {fee})
+        return update(prevState, {doc})
       })
     }
   }
 }
 
-updateFeeState (stateUpdates) {
+updateState (stateUpdates) {
   this.setState((prevState, props) => {
-    return update(prevState, {fee: stateUpdates})
+    return update(prevState, {doc: stateUpdates})
   })
 }
 
-clearCurrentFee () {
+clearCurrentDoc () {
     window.scrollTo(0, 0)
     this.setState({
-      fee: this.newFee,
+      doc: this.newFee,
       edit: true,
       newInfo: true,
       view: 'split-view'
@@ -80,9 +80,9 @@ clearCurrentFee () {
     return (
         <div id='register' className='register'>
         <FeesForm
-            updateFee={this.updateFee}
-            updateFeeState={this.updateFeeState}
-            clearCurrentFee={this.clearCurrentFee}
+            updateDoc={this.updateDoc}
+            updateState={this.updateState}
+            clearCurrentDoc={this.clearCurrentDoc}
             {...this.state}
             {...this.props} />
         </div>

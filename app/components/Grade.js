@@ -5,15 +5,37 @@ import update from 'immutability-helper'
 import uuid from 'uuid/v4'
 import {toDate} from '../utils'
 import GradeForm from 'GradeForm'
-import {SchoolData} from '../schoolData'
 
 
 
 export default class Grade extends React.Component {
   constructor (props) {
     super(props)
+
+    this.newGrade = {
+      id: uuid(),
+      createdAt: toDate(),
+      GradeInfo: {
+        studentID: '',
+        semester: '',
+        period: '',
+        math: '',
+        english: '',
+        biology: '',
+        literature: '',
+        chemistry: '',
+        physics: '',
+        history: '',
+        geography: '',
+        economics: '',
+        french: '',
+        rotc: '',
+        religious: ''
+      }
+  }
+
     this.state = {
-      schoolInfo: SchoolData(),
+      doc: this.newGrade,
       edit: false
     }
 
@@ -24,8 +46,8 @@ export default class Grade extends React.Component {
   }
 
 
-  viewDoc (schoolInfo) {
-    return (e) => this.setState({schoolInfo, edit: false})
+  viewDoc (doc) {
+    return (e) => this.setState({doc, edit: false})
   }
 
   updateDoc (section) {
@@ -37,14 +59,14 @@ export default class Grade extends React.Component {
                   : e.target.value
 
         this.setState((prevState, props) => {
-          let schoolInfo = {}
-          schoolInfo[section] = {}
-          schoolInfo[section][key] = {$set: value}
+          let doc = {}
+          doc[section] = {}
+          doc[section][key] = {$set: value}
 
           for (let prop in dependentProps) {
-            schoolInfo[section][prop] = {$set: dependentProps[prop][value]}
+            doc[section][prop] = {$set: dependentProps[prop][value]}
           }
-          return update(prevState, {schoolInfo})
+          return update(prevState, {doc})
         })
       }
     }
@@ -52,14 +74,14 @@ export default class Grade extends React.Component {
 
   updateState (stateUpdates) {
     this.setState((prevState, props) => {
-      return update(prevState, {schoolInfo: stateUpdates})
+      return update(prevState, {doc: stateUpdates})
     })
   }
 
   clearCurrentDoc () {
       window.scrollTo(0, 0)
       this.setState({
-        schoolInfo: SchoolData(),
+        doc: this.newGrade,
         edit: true,
         newInfo: true,
         view: 'split-view'

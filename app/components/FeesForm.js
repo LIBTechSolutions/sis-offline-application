@@ -7,13 +7,13 @@ export default class FeesForm extends React.Component {
   constructor (props) {
     super(props)
     this.submitInfo = this.submitInfo.bind(this)
-    this.schoolDb = this.props.schoolDb
+    this.feeDb = this.props.feeDb
   }
 
   submitInfo (event) {
     event.preventDefault()
 
-    let feeInfo = Object.assign({}, this.props.fee)
+    let feeInfo = Object.assign({}, this.props.doc)
 
     if (!feeInfo._id) {
       feeInfo._id = feeInfo.id
@@ -22,10 +22,10 @@ export default class FeesForm extends React.Component {
     console.log('About to post to pouch...', feeInfo._id)
 
     // Save to pouchdb
-    this.schoolDb.put(feeInfo, (err, result) => {
+    this.feeDb.put(feeInfo, (err, result) => {
       if (!err) {
         console.log('Successfully posted to pouchdb!')
-        this.props.clearCurrentFee()
+        this.props.clearCurrentDoc()
       } else {
         console.log('Error saving to pouch...')
         console.log(err)
@@ -37,16 +37,16 @@ export default class FeesForm extends React.Component {
 
   render () {
     let {
-      fee,
+      doc,
       edit,
-      updateFee,
-      updateFeeState,
+      updateDoc,
+      updateState,
     } = this.props
     return (
       <div className='student-form'>
         <form action='' onSubmit={this.submitInfo}>
           <div className='student-form__container'>
-          <FeesInfo edit={edit} handleChange={updateFee('FeesInfo')} {...fee.FeesInfo} />
+          <FeesInfo edit={edit} handleChange={updateDoc('FeesInfo')} {...doc.FeesInfo} />
           <button className='button expanded' type='submit'>Save</button>
           </div>
         </form>

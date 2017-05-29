@@ -21,7 +21,17 @@
       "Grade Twelve": "Grade Twelve"
     }
   },
-  "db": {
-    "local": "sisdb01"
+  "reg_db": {
+    "local": "sisdbrgb"
+  },
+  "grade_db": {
+    "local": "sisdbgdb"
+  },
+  "fee_db": {
+    "local": "sisdbfdb"
+  },
+  "allowed_users": {
+      "zikollie@gmail.com": "zikollie@gmail.com",
+      "kollie12345": "kollie12345"
   }
 }

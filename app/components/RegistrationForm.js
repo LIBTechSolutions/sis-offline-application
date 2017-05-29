@@ -7,14 +7,14 @@ export default class RegistrationForm extends React.Component {
   constructor (props) {
     super(props)
     this.submitInfo = this.submitInfo.bind(this)
-    this.schoolDb = this.props.schoolDb
+    this.regDb = this.props.regDb
   }
 
 
   submitInfo (event) {
     event.preventDefault()
 
-    let schoolData = Object.assign({}, this.props.schoolInfo)
+    let schoolData = Object.assign({}, this.props.doc)
 
     if (!schoolData._id) {
       schoolData._id = schoolData.id
@@ -23,7 +23,7 @@ export default class RegistrationForm extends React.Component {
     console.log('About to post to pouch...', schoolData._id)
 
     // Save to pouchdb
-    this.schoolDb.put(schoolData, (err, result) => {
+    this.regDb.put(schoolData, (err, result) => {
       if (!err) {
         console.log('Successfully posted to pouchdb!')
         this.props.clearCurrentDoc()
@@ -39,16 +39,17 @@ export default class RegistrationForm extends React.Component {
 
   render () {
     let {
-      schoolInfo,
+      doc,
       edit,
       updateDoc,
-      updateState
+      updateState,
+      toggleEdit
     } = this.props
     return (
       <div className='student-form'>
         <form action='' onSubmit={this.submitInfo}>
           <div className='student-form__container'>
-          <RegistrationInfo edit={edit} handleChange={updateDoc('RegistrationInfo')} {...schoolInfo.RegistrationInfo} />
+          <RegistrationInfo edit={edit} updateState={updateState} toggleEdit={toggleEdit} handleChange={updateDoc('RegistrationInfo')} {...doc.RegistrationInfo} />
           <button className='button expanded' type='submit'>Save</button>
           </div>
         </form>

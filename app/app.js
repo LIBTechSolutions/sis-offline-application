@@ -3,7 +3,7 @@
 import React from 'react'
 import pouchdb from 'pouchdb-browser'
 import { render } from 'react-dom'
-import Header from 'Header'
+import App from 'App'
 
 import config from '../conf.json'
 
@@ -16,7 +16,9 @@ $(document).ready(function ($) {
   $(document).foundation();
 })
 
-const schoolDb = new pouchdb(config.db.local)
+const regDb = new pouchdb(config.reg_db.local)
+const gradeDb = new pouchdb(config.grade_db.local)
+const feeDb = new pouchdb(config.fee_db.local)
 
 
 // app css
@@ -25,8 +27,11 @@ require('applicationStyles')
 
 render(
   <div>
-    <Header
-      schoolDb={schoolDb}
+    <App
+      config={config}
+      regDb={regDb}
+      gradeDb={gradeDb}
+      feeDb={feeDb}
       />
   </div>,
   document.getElementById('app')

@@ -8,14 +8,14 @@ export default class GradeForm extends React.Component {
   constructor (props) {
     super(props)
     this.submitInfo = this.submitInfo.bind(this)
-    this.schoolDb = this.props.schoolDb
+    this.gradeDb = this.props.gradeDb
   }
 
 
   submitInfo (event) {
     event.preventDefault()
 
-    let schoolData = Object.assign({}, this.props.schoolInfo)
+    let schoolData = Object.assign({}, this.props.doc)
 
     if (!schoolData._id) {
       schoolData._id = schoolData.id
@@ -24,7 +24,7 @@ export default class GradeForm extends React.Component {
     console.log('About to post to pouch...', schoolData._id)
 
     // Save to pouchdb
-    this.schoolDb.put(schoolData, (err, result) => {
+    this.gradeDb.put(schoolData, (err, result) => {
       if (!err) {
         console.log('Successfully posted to pouchdb!')
         this.props.clearCurrentDoc()
@@ -35,9 +35,10 @@ export default class GradeForm extends React.Component {
     })
   }
 
+
   render () {
     let {
-      schoolInfo,
+      doc,
       edit,
       updateDoc,
       updateState,
@@ -49,7 +50,7 @@ export default class GradeForm extends React.Component {
             <div className='container'>
         <form action='' onSubmit={this.submitInfo}>
           <div className='student-form__container'>
-          <GradeInfo edit={edit} handleChange={updateDoc('GradeInfo')} {...schoolInfo.GradeInfo} />
+          <GradeInfo edit={edit} handleChange={updateDoc('GradeInfo')} {...doc.GradeInfo} />
           <button className='button expanded' type='submit'>Save</button>
           </div>
         </form>
