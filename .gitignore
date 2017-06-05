@@ -1,1 +1,7 @@
 node_modules/
+
+# ignore build bundle
+public/bundle.js
+
+# installer files
+dist

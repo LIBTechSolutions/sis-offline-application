@@ -3,9 +3,6 @@
 import React from 'react'
 
 export default class Users extends React.Component {
-  constructor (props) {
-    super(props)
-  }
 
   render () {
     let {yourName, userName, email, phoneNumber, password} = this.props
