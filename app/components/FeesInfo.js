@@ -12,8 +12,11 @@ export default class FeesInfo extends Component {
     let handleChange = props.handleChange()
     return (
       <fieldset>
-      <legend>Fees</legend>
-
+      <legend>FEES FORM</legend>
+                <br>
+                </br>
+              <label>Student Fees Payment Information</label>
+              <div className='container'>
                 <input name='semester'
                   value={props['semester']}
                   type='text'
@@ -38,6 +41,8 @@ export default class FeesInfo extends Component {
                   placeholder='Amount paid'
                   onChange={handleChange}
                 />
+                </div>
+
               </fieldset>
 
     )

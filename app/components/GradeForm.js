@@ -48,7 +48,22 @@ export default class GradeForm extends React.Component {
         <form action='' onSubmit={this.submitInfo}>
           <div className='student-form__container'>
           <GradeInfo edit={edit} handleChange={updateGrade('GradeInfo')} {...grade.GradeInfo} />
-          <button className='button expanded' type='submit'>Save</button>
+          <br>
+          </br>
+          <br>
+          </br>
+          <br>
+          </br>
+          <div className='row'>
+           <div className='small-8 small-offset-2 columns'>
+              <div className="small-4 columns">
+                <button className='button expanded' type='reset' value='Reset'>Reset</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </div>
+               <div className="small-4 columns">
+                <button className='button expanded' type='submit'>Save</button>
+               </div>
+            </div>
+          </div>
           </div>
         </form>
         </div>

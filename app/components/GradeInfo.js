@@ -12,8 +12,11 @@ export default class FeesInfo extends Component {
     let handleChange = props.handleChange()
     return (
       <fieldset>
-      <legend>Grade</legend>
+      <legend>GRADE FORM</legend>
+      <br>
+      </br>
               <div className='large-4 medium-4 columns'>
+              <label>Student ID: <small>Required</small></label>
                 <input name='studentID'
                   value={props['studentID']}
                   type='text'
@@ -45,7 +48,15 @@ export default class FeesInfo extends Component {
                 Second Semester
                   </label>
                   </div>
+
                   <div className='large-12 medium-12 columns'>
+                  <br>
+                  </br>
+                  <br>
+                  </br>
+                  <label>Periods</label>
+                  <div className='container'>
+                  <div className='large-6 medium-6 columns'>
                     <div className='callout'>
                 <label>
                 <input name='period'
@@ -115,7 +126,16 @@ export default class FeesInfo extends Component {
                 </label>
                 </div>
                 </div>
+                </div>
+                </div>
+
                 <div className='large-12 medium-12 columns'>
+                <br>
+                </br>
+                <br>
+                </br>
+                <label>Subjects and Grades</label>
+                <div className='container'>
                   <div className='large-3 medium-3 columns'>
                 <input name='math'
                   value={props['math']}
@@ -211,6 +231,7 @@ export default class FeesInfo extends Component {
                   placeholder='Religious Education Grade'
                   onChange={handleChange}
                 />
+              </div>
               </div>
               </div>
               </fieldset>

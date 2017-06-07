@@ -41,14 +41,40 @@ export default class FeesForm extends React.Component {
       updateFeeState,
     } = this.props
     return (
-      <div className='student-form'>
-        <form action='' onSubmit={this.submitInfo}>
-          <div className='student-form__container'>
-          <FeesInfo edit={edit} handleChange={updateFee('FeesInfo')} {...fee.FeesInfo} />
-          <button className='button expanded' type='submit'>Save</button>
+      <div className='well'>
+        <div className='row'>
+          <div className='student-form'>
+            <div className='columns small-centered medium-8  large-8'>
+              <div className='form'>
+                <div className='container'>
+                  <form action='' onSubmit={this.submitInfo}>
+                    <div className='student-form__container'>
+                      <FeesInfo edit={edit} handleChange={updateFee('FeesInfo')} {...fee.FeesInfo} />
+                      <br>
+                      </br>
+                      <br>
+                      </br>
+                      <br>
+                      </br>
+                        <div className='row'>
+                         <div className='small-8 small-offset-2 columns'>
+                            <div className="small-4 columns">
+                              <button className='button expanded' type='reset' value='Reset'>Reset</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </div>
+                             <div className="small-4 columns">
+                              <button className='button expanded' type='submit'>Save</button>
+                             </div>
+                          </div>
+                        </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     )
   }
+
 }

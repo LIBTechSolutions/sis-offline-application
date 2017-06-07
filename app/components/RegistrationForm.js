@@ -41,14 +41,41 @@ export default class RegistrationForm extends React.Component {
       updateState
     } = this.props
     return (
-      <div className='student-form'>
-        <form action='' onSubmit={this.submitInfo}>
-          <div className='student-form__container'>
-          <RegistrationInfo edit={edit} handleChange={updateSchool('RegistrationInfo')} {...school.RegistrationInfo} />
-          <button className='button expanded' type='submit'>Save</button>
+
+    <div className='well'>
+      <div className='row'>
+        <div className='student-form'>
+          <div className='columns large-centered large-12  medium-12'>
+            <div className='form'>
+              <div className='container'>
+                <form action='' onSubmit={this.submitInfo} data-abide>
+                  <div className='student-form__container'>
+                    <RegistrationInfo edit={edit} handleChange={updateSchool('RegistrationInfo')} {...school.RegistrationInfo} />
+                    <br>
+                    </br>
+                    <br>
+                    </br>
+                    <br>
+                    </br>
+                      <div className='row'>
+                       <div className='small-8 small-offset-2 columns'>
+                          <div className="small-4 columns">
+                            <button className='button expanded' type='reset' value='Reset'>Reset</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          </div>
+                           <div className="small-4 columns">
+                            <button className='button expanded' type='submit'>Save</button>
+                           </div>
+                        </div>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
+    </div>
     )
+
   }
 }
