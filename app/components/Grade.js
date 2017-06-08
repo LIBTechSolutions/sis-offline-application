@@ -84,7 +84,6 @@ export default class Grade extends React.Component {
         doc: this.newGrade,
         edit: true,
         newInfo: true,
-        view: 'split-view'
       })
     }
 

@@ -70,8 +70,7 @@ clearCurrentDoc () {
     this.setState({
       doc: this.newFee,
       edit: true,
-      newInfo: true,
-      view: 'split-view'
+      newInfo: true
     })
   }
 

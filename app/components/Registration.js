@@ -46,14 +46,7 @@ export default class Registration extends React.Component {
     this.updateDoc = this.updateDoc.bind(this)
     this.updateState = this.updateState.bind(this)
     this.clearCurrentDoc = this.clearCurrentDoc.bind(this)
-    this.viewDoc = this.viewDoc.bind(this)
-
   }
-
-viewDoc (doc) {
-  return (e) => this.setState({doc, edit: false})
-}
-
 
 updateDoc (section) {
   return (dependentProps) => {
@@ -92,8 +85,7 @@ clearCurrentDoc () {
     this.setState({
       doc: this.newReg,
       edit: true,
-      newInfo: true,
-      view: 'split-view'
+      newInfo: true
     })
   }
 
@@ -102,7 +94,6 @@ clearCurrentDoc () {
     return (
         <div id='register' className='register'>
         <RegistrationForm
-            viewDoc={this.viewDoc}
             toggleEdit={this.toggleEdit}
             updateDoc={this.updateDoc}
             updateState={this.updateState}

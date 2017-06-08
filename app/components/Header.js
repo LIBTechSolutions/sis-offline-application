@@ -19,7 +19,9 @@ export default class Header extends React.Component {
       gradedata: false,
       registrationdata: false,
       feedata: false,
-      doc: this.props.doc
+      view: 'full-view',
+      doc: this.state,
+      newInfo: this.state
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleFee = this.handleFee.bind(this)
@@ -37,7 +39,12 @@ export default class Header extends React.Component {
   }
 
   viewDoc (doc) {
-    return (e) => this.setState({doc, edit: false})
+    return (e) => this.setState({
+      doc,
+      newInfo: false,
+      edit: false,
+      view: 'split-view'
+    })
   }
 
   handleFee () {
@@ -152,7 +159,7 @@ export default class Header extends React.Component {
             </ul>
           </div>
       </div>
-      <div className='school-data'>
+      <div className={this.state.view}>
         {this.state.registration ? <Registration regDb={this.regDb} {...this.props}/>: null}
         {this.state.fee ? <Fees feeDb={this.feeDb} {...this.props}/>: null}
         {this.state.grade ? <Grade gradeDb={this.gradeDb} {...this.props}/>: null}
