@@ -28,7 +28,7 @@ getClasses () {
     let {edit} = props
     let handleChange = props.handleChange()
     return (
-      <fieldset>
+      <fieldset disabled={!edit}>
       <legend>Registration Form</legend>
 
               <label>

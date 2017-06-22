@@ -2,12 +2,14 @@
 
 import React from 'react'
 import FeesInfo from 'FeesInfo'
+import Toolbar from 'Toolbar'
 
 export default class FeesForm extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {canSubmit: false}
     this.submitInfo = this.submitInfo.bind(this)
-    this.feeDb = this.props.feeDb
+    this.localdb = this.props.localdb
   }
 
   submitInfo (event) {
@@ -22,7 +24,7 @@ export default class FeesForm extends React.Component {
     console.log('About to post to pouch...', feeInfo._id)
 
     // Save to pouchdb
-    this.feeDb.put(feeInfo, (err, result) => {
+    this.localdb.put(feeInfo, (err, result) => {
       if (!err) {
         console.log('Successfully posted to pouchdb!')
         this.props.clearCurrentDoc()
@@ -32,24 +34,35 @@ export default class FeesForm extends React.Component {
       }
     })
   }
+  canSubmit () {
+    return this.form
+      ? this.props.edit && this.form.checkValidity()
+      : false
+  }
 
 
 
   render () {
     let {
       doc,
+      user,
       edit,
       updateDoc,
       updateState,
+      toggleEdit,
+      clearCurrentDoc,
+      closeWindow
     } = this.props
     return (
+      <div className='student'>
       <div className='student-form'>
-        <form action='' onSubmit={this.submitInfo}>
+        <form action='' onSubmit={this.submitInfo} ref={form => {this.form = form}}>
           <div className='student-form__container'>
-          <FeesInfo edit={edit} handleChange={updateDoc('FeesInfo')} {...doc.FeesInfo} />
-          <button className='button expanded' type='submit'>Save</button>
+          <FeesInfo edit={edit} handleChange={updateDoc} {...doc.feeInfo} user={user}/>
+          <Toolbar edit={edit} clearCurrentDoc={clearCurrentDoc} toggleEdit={toggleEdit} closeWindow={closeWindow} canSubmit={this.state.canSubmit} />
           </div>
         </form>
+      </div>
       </div>
     )
   }

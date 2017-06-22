@@ -5,53 +5,52 @@ import update from 'immutability-helper'
 import uuid from 'uuid/v4'
 import {toDate} from '../utils'
 import GradeForm from 'GradeForm'
-
+import GradeData from 'GradeDataPage'
+import classnames from 'classnames'
+import {getSchoolInfo} from '../schoolData'
 
 
 export default class Grade extends React.Component {
   constructor (props) {
     super(props)
 
-    this.newGrade = {
-      id: uuid(),
-      createdAt: toDate(),
-      GradeInfo: {
-        studentID: '',
-        semester: '',
-        period: '',
-        math: '',
-        english: '',
-        biology: '',
-        literature: '',
-        chemistry: '',
-        physics: '',
-        history: '',
-        geography: '',
-        economics: '',
-        french: '',
-        rotc: '',
-        religious: ''
-      }
-  }
-
     this.state = {
-      doc: this.newGrade,
-      edit: false
+      doc: getSchoolInfo(this.props),
+      edit: false,
+      view: 'full-view'
     }
 
     this.viewDoc = this.viewDoc.bind(this)
     this.updateDoc = this.updateDoc.bind(this)
     this.updateState = this.updateState.bind(this)
     this.clearCurrentDoc = this.clearCurrentDoc.bind(this)
+    this.addFee = this.addFee.bind(this)
+    this.toggleEdit = this.toggleEdit.bind(this)
+    this.closeWindow = this.closeWindow.bind(this)
   }
 
 
   viewDoc (doc) {
-    return (e) => this.setState({doc, edit: false})
+    return (e) => this.setState({
+      doc,
+      edit: false,
+      view: 'split-view'
+    })
   }
 
-  updateDoc (section) {
-    return (dependentProps) => {
+  toggleEdit () {
+      this.setState((prevState, props) => { return {edit: !prevState.edit} })
+    }
+
+  addFee () {
+    this.setState({
+      doc: getSchoolInfo(this.props),
+      edit: true,
+      view: 'split-view'
+    })
+  }
+
+  updateDoc (dependentProps) {
       return (e) => {
         let key = e.target.name
         let value = e.target.type === 'checkbox'
@@ -59,18 +58,27 @@ export default class Grade extends React.Component {
                   : e.target.value
 
         this.setState((prevState, props) => {
-          let doc = {}
-          doc[section] = {}
-          doc[section][key] = {$set: value}
-
-          for (let prop in dependentProps) {
-            doc[section][prop] = {$set: dependentProps[prop][value]}
+          let doc = {
+            gradeInfo: {
+              [key]: {$set: value}
+            }
           }
-          return update(prevState, {doc})
+
+          if (typeof dependentProps === 'function') {
+            let calculatedProps = dependentProps(value)
+            for (let prop in calculatedProps) {
+              doc.gradeInfo[prop] = {$set: calculatedProps[prop]}
+            }
+          } else {
+            for (let prop in dependentProps) {
+              doc.gradeInfo[prop] = {$set: dependentProps[prop](value)}
+            }
+          }
+
+          return update(prevState, {doc, hasChanged: {$set: true}})
         })
       }
     }
-  }
 
   updateState (stateUpdates) {
     this.setState((prevState, props) => {
@@ -79,23 +87,37 @@ export default class Grade extends React.Component {
   }
 
   clearCurrentDoc () {
-      window.scrollTo(0, 0)
       this.setState({
-        doc: this.newGrade,
-        edit: true,
-        newInfo: true,
+        doc: getSchoolInfo(this.props),
+        edit: true
       })
     }
 
-
+    closeWindow () {
+        this.setState({
+          view: 'full-view'
+        })
+      }
 
   render () {
+    let registerClass = classnames('register', this.state.view)
     return (
-        <div id='register' className='register'>
+        <div id='register' className={registerClass}>
+          <div className='addheader'>
+            <div className='large-12 columns'>
+              <h3 className='addtitle'><button className='button addtitle' type='button' onClick={this.addFee} disabled={this.state.view === 'split-view'}><i className="fi-add"></i>Add Grade</button></h3>
+            </div>
+          </div>
+        <GradeData
+            viewDoc={this.viewDoc}
+            {...this.props}
+            />
         <GradeForm
             updateDoc={this.updateDoc}
             updateState={this.updateState}
             clearCurrentDoc={this.clearCurrentDoc}
+            toggleEdit={this.toggleEdit}
+            closeWindow={this.closeWindow}
             {...this.state}
             {...this.props} />
         </div>

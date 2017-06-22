@@ -21,14 +21,11 @@
       "Grade Twelve": "Grade Twelve"
     }
   },
-  "reg_db": {
-    "local": "sisdbrgb"
-  },
-  "grade_db": {
-    "local": "sisdbgdb"
-  },
-  "fee_db": {
-    "local": "sisdbfdb"
+  "db": {
+    "school": {
+      "local": "sis-v01",
+      "remote": "http://localhost:5984/sis"
+    }
   },
   "allowed_users": {
     "zikollie@gmail.com": {

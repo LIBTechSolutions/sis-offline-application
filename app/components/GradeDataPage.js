@@ -5,12 +5,12 @@ export default class GradeData extends React.Component {
   constructor (props) {
     super(props)
     this.state = {docs: []}
-    this.gradeDb = this.props.gradeDb
+    this.localdb = this.props.localdb
   }
 
   componentDidMount () {
     this.updateDocs()
-    this.gradeDb.changes({
+    this.changes = this.localdb.changes({
       since: 'now',
       live: true
     }).on('change', (change) => {
@@ -21,9 +21,12 @@ export default class GradeData extends React.Component {
   }
 
   updateDocs () {
-    this.gradeDb.allDocs({include_docs: true}).then((res) => {
+    this.localdb.allDocs({include_docs: true}).then((res) => {
       var docs = res.rows.map((row) => row.doc)
-      this.setState({docs})
+      console.log(docs)
+      if (docs) {
+        this.setState({docs})
+      }
     })
   }
 
@@ -57,12 +60,13 @@ export default class GradeData extends React.Component {
 class DataRow extends React.Component {
   render () {
     let {doc, viewDoc} = this.props
+    console.log(doc)
 
     return (
       <tr onClick={viewDoc(doc)}>
-        <td>{doc.GradeInfo['studentID']}</td>
-        <td>{doc.GradeInfo['semester']}</td>
-        <td>{doc.GradeInfo['period']}</td>
+        <td>{doc.gradeInfo.studentID}</td>
+        <td>{doc.gradeInfo.semester}</td>
+        <td>{doc.gradeInfo.period}</td>
       </tr>
     )
   }

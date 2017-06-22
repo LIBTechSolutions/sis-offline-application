@@ -16,9 +16,8 @@ $(document).ready(function ($) {
   $(document).foundation();
 })
 
-const regDb = new pouchdb(config.reg_db.local)
-const gradeDb = new pouchdb(config.grade_db.local)
-const feeDb = new pouchdb(config.fee_db.local)
+const localdb = new pouchdb(config.db.school.local)
+const remoteDb = config.db.school.remote
 
 
 // app css
@@ -29,9 +28,8 @@ render(
   <div>
     <App
       config={config}
-      regDb={regDb}
-      gradeDb={gradeDb}
-      feeDb={feeDb}
+      localdb={localdb}
+      remoteDb={remoteDb}
       />
   </div>,
   document.getElementById('app')

@@ -11,7 +11,7 @@ export default class FeesInfo extends Component {
     let {edit} = props
     let handleChange = props.handleChange()
     return (
-      <fieldset>
+      <fieldset disabled={!edit}>
       <legend>Grade</legend>
               <div className='large-4 medium-4 columns'>
                 <input name='studentID'

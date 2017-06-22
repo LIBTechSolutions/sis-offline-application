@@ -5,16 +5,13 @@ export default class RegistrationData extends React.Component {
 
   constructor (props) {
     super(props)
-    this.state = {
-      docs: [],
-      modalActive: false
-    }
-    this.regDb = this.props.regDb
+    this.state = {docs: []}
+    this.localdb = this.props.localdb
   }
 
   componentDidMount () {
     this.updateDocs()
-    this.regDb.changes({
+    this.localdb.changes({
       since: 'now',
       live: true
     }).on('change', (change) => {
@@ -25,9 +22,12 @@ export default class RegistrationData extends React.Component {
   }
 
   updateDocs () {
-    this.regDb.allDocs({include_docs: true}).then((res) => {
+    this.localdb.allDocs({include_docs: true}).then((res) => {
       var docs = res.rows.map((row) => row.doc)
-      this.setState({docs})
+      console.log(docs)
+      if (docs) {
+        this.setState({docs})
+      }
     })
   }
 
@@ -59,37 +59,14 @@ export default class RegistrationData extends React.Component {
 }
 
 class DataRow extends React.Component {
-  // constructor (props) {
-  //   super(props)
-  //   this.state = {
-  //     modalActive: false
-  //   }
-  //   this.openModal = this.openModal.bind(this)
-  //   this.closeModal = this.closeModal.bind(this)
-  // }
-  //
-  // openModal () {
-  //   this.setState({ modalActive: true })
-  // }
-  // closeModal () {
-  //   this.setState({ modalActive: false })
-  // }
-
   render () {
     let {doc, viewDoc} = this.props
-    // let data = (this.state.modalActive && (
-    //       <div className='modalDialog'>
-    //         <button className='button' type='button' onClick={this.closeModal}>X</button>
-    //         <h2>Modal</h2>
-    //         <div>This is a sample modal</div>
-    //       </div>
-    //     ))
-
+    console.log(doc)
     return (
-      <tr onClick={viewDoc(doc._id)} className='selected'>
-        <td>{doc.RegistrationInfo['registrationtype']}</td>
-        <td>{doc.RegistrationInfo['firstname']}</td>
-        <td>{doc.RegistrationInfo['middlename']}</td>
+      <tr onClick={viewDoc(doc)} className='selected'>
+        <td>{doc.registrationInfo.registrationtype}</td>
+        <td>{doc.registrationInfo.firstname}</td>
+        <td>{doc.registrationInfo.middlename}</td>
       </tr>
     )
   }

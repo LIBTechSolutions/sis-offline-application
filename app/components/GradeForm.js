@@ -2,13 +2,15 @@
 
 import React from 'react'
 import GradeInfo from 'GradeInfo'
+import Toolbar from 'Toolbar'
 
 
 export default class GradeForm extends React.Component {
   constructor (props) {
     super(props)
+    this.state = {canSubmit: false}
     this.submitInfo = this.submitInfo.bind(this)
-    this.gradeDb = this.props.gradeDb
+    this.localdb = this.props.localdb
   }
 
 
@@ -24,7 +26,7 @@ export default class GradeForm extends React.Component {
     console.log('About to post to pouch...', schoolData._id)
 
     // Save to pouchdb
-    this.gradeDb.put(schoolData, (err, result) => {
+    this.localdb.put(schoolData, (err, result) => {
       if (!err) {
         console.log('Successfully posted to pouchdb!')
         this.props.clearCurrentDoc()
@@ -38,20 +40,24 @@ export default class GradeForm extends React.Component {
 
   render () {
     let {
+      user,
       doc,
       edit,
       updateDoc,
       updateState,
+      toggleEdit,
+      clearCurrentDoc,
+      closeWindow
     } = this.props
     return (
-      <div className='row'>
-        <div className='columns large-centered large-12  medium-12'>
-          <div className='form'>
+      <div className='student'>
+        <div className='student-form'>
+          <div>
             <div className='container'>
         <form action='' onSubmit={this.submitInfo}>
           <div className='student-form__container'>
-          <GradeInfo edit={edit} handleChange={updateDoc('GradeInfo')} {...doc.GradeInfo} />
-          <button className='button expanded' type='submit'>Save</button>
+          <GradeInfo edit={edit} handleChange={updateDoc} {...doc.gradeInfo} user={user} />
+            <Toolbar edit={edit} clearCurrentDoc={clearCurrentDoc} toggleEdit={toggleEdit} closeWindow={closeWindow} canSubmit={this.state.canSubmit} />
           </div>
         </form>
         </div>

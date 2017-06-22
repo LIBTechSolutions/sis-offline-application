@@ -10,6 +10,8 @@ export default class App extends React.Component {
     this.state = {
       user: null
     }
+    this.localdb = this.props.localdb
+    this.remoteSync = null
 
     this.checkLogin = this.checkLogin.bind(this)
     this.logout = this.logout.bind(this)
@@ -35,6 +37,14 @@ export default class App extends React.Component {
     return !!this.state.user
   }
 
+  componentDidMount () {
+    this.startRemoteSync()
+  }
+
+  componentWillUnmount () {
+    this.stopRemoteSync()
+  }
+
   render () {
     return <Home {...this.state} {...this.props}
       checkLogin={this.checkLogin}
@@ -42,4 +52,20 @@ export default class App extends React.Component {
       logout={this.logout}
     />
   }
+
+  startRemoteSync () {
+      console.log('starting remote sync')
+      this.remoteSync = this.localdb.sync(this.props.remoteDb, {
+        live: true,
+        retry: true
+      }).on('complete', () => {
+        console.log('Remote sync complete', this.remoteSync)
+      }).on('error', (err) => {
+        console.log(err)
+      })
+    }
+
+    stopRemoteSync () {
+      this.remoteSync && this.remoteSync.cancel()
+    }
 }

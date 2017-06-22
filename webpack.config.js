@@ -39,14 +39,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                loader: 'file-loader',
-                options: {
-                    context: '/',
-                    name: '[name].[ext]'
-                },
-            },
       { test: require.resolve('jquery'), loader: 'expose-loader?$!expose-loader?jQuery' },
       {
         test: /\.(sass|scss$)/,

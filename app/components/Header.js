@@ -18,10 +18,7 @@ export default class Header extends React.Component {
       grade: false,
       gradedata: false,
       registrationdata: false,
-      feedata: false,
-      view: 'full-view',
-      doc: this.state,
-      newInfo: this.state
+      feedata: false
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleFee = this.handleFee.bind(this)
@@ -29,7 +26,6 @@ export default class Header extends React.Component {
     this.handleGradeData = this.handleGradeData.bind(this)
     this.handleFeeData = this.handleFeeData.bind(this)
     this.handleRegistrationData = this.handleRegistrationData.bind(this)
-    this.viewDoc = this.viewDoc.bind(this)
     this.logout = this.logout.bind(this)
   }
 
@@ -38,14 +34,6 @@ export default class Header extends React.Component {
     this.props.logout()
   }
 
-  viewDoc (doc) {
-    return (e) => this.setState({
-      doc,
-      newInfo: false,
-      edit: false,
-      view: 'split-view'
-    })
-  }
 
   handleFee () {
     this.setState({
@@ -159,13 +147,13 @@ export default class Header extends React.Component {
             </ul>
           </div>
       </div>
-      <div className={this.state.view}>
+      <div>
         {this.state.registration ? <Registration regDb={this.regDb} {...this.props}/>: null}
         {this.state.fee ? <Fees feeDb={this.feeDb} {...this.props}/>: null}
         {this.state.grade ? <Grade gradeDb={this.gradeDb} {...this.props}/>: null}
         {this.state.gradedata ? <GradeData gradeDb={this.gradeDb} viewDoc={this.viewDoc} {...this.props}/>: null}
         {this.state.registrationdata ? <RegistrationData regDb={this.regDb} viewDoc={this.viewDoc} {...this.props}/>: null}
-        {this.state.feedata ? <FeeData feeDb={this.feeDb} viewDoc={this.viewDoc} {...this.props}/>: null}
+        {this.state.feedata ? <FeeData feeDb={this.feeDb} {...this.props}/>: null}
       </div>
     </div>
     )

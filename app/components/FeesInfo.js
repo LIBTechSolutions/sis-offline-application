@@ -11,7 +11,7 @@ export default class FeesInfo extends Component {
     let {edit} = props
     let handleChange = props.handleChange()
     return (
-      <fieldset>
+      <fieldset disabled={!edit}>
       <legend>Fees</legend>
 
                 <input name='semester'
@@ -25,6 +25,7 @@ export default class FeesInfo extends Component {
                   type='text'
                   placeholder='Period'
                   onChange={handleChange}
+                  required
                 />
                 <input name='class'
                   value={props['class']}
@@ -37,6 +38,7 @@ export default class FeesInfo extends Component {
                   type='number'
                   placeholder='Amount paid'
                   onChange={handleChange}
+                  required
                 />
               </fieldset>
 

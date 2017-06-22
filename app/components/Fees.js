@@ -2,9 +2,10 @@
 
 import React from 'react'
 import update from 'immutability-helper'
-import uuid from 'uuid/v4'
-import {toDate} from '../utils'
 import FeesForm from 'FeesForm'
+import FeeData from 'FeeDataPage'
+import classnames from 'classnames'
+import {getSchoolInfo} from '../schoolData'
 
 
 
@@ -12,33 +13,41 @@ export default class Fees extends React.Component {
   constructor (props) {
     super(props)
 
-    this.newFee = {
-      id: uuid(),
-      createdAt: toDate(),
-      FeesInfo: {
-        semester: '',
-        period: '',
-        class: '',
-        amount: ''
-      }
-  }
-
   this.state = {
-    doc: this.newFee,
-    edit: false
+    doc: getSchoolInfo(this.props),
+    edit: false,
+    view: 'full-view'
   }
     this.viewDoc = this.viewDoc.bind(this)
     this.updateDoc = this.updateDoc.bind(this)
     this.updateState = this.updateState.bind(this)
     this.clearCurrentDoc = this.clearCurrentDoc.bind(this)
+    this.addFee = this.addFee.bind(this)
+    this.toggleEdit = this.toggleEdit.bind(this)
+    this.closeWindow = this.closeWindow.bind(this)
 }
 
 viewDoc (doc) {
-  return (e) => this.setState({doc, edit: false})
+  return (e) => this.setState({
+    doc,
+    edit: false,
+    view: 'split-view'
+  })
 }
 
-updateDoc (section) {
-  return (dependentProps) => {
+toggleEdit () {
+    this.setState((prevState, props) => { return {edit: !prevState.edit} })
+  }
+
+addFee () {
+  this.setState({
+    doc: getSchoolInfo(this.props),
+    edit: true,
+    view: 'split-view'
+  })
+}
+
+updateDoc (dependentProps) {
     return (e) => {
       let key = e.target.name
       let value = e.target.type === 'checkbox'
@@ -46,18 +55,27 @@ updateDoc (section) {
                 : e.target.value
 
       this.setState((prevState, props) => {
-        let doc = {}
-        doc[section] = {}
-        doc[section][key] = {$set: value}
-
-        for (let prop in dependentProps) {
-          doc[section][prop] = {$set: dependentProps[prop][value]}
+        let doc = {
+          feeInfo: {
+            [key]: {$set: value}
+          }
         }
-        return update(prevState, {doc})
+
+        if (typeof dependentProps === 'function') {
+          let calculatedProps = dependentProps(value)
+          for (let prop in calculatedProps) {
+            doc.feeInfo[prop] = {$set: calculatedProps[prop]}
+          }
+        } else {
+          for (let prop in dependentProps) {
+            doc.feeInfo[prop] = {$set: dependentProps[prop](value)}
+          }
+        }
+
+        return update(prevState, {doc, hasChanged: {$set: true}})
       })
     }
   }
-}
 
 updateState (stateUpdates) {
   this.setState((prevState, props) => {
@@ -66,22 +84,36 @@ updateState (stateUpdates) {
 }
 
 clearCurrentDoc () {
-    window.scrollTo(0, 0)
     this.setState({
-      doc: this.newFee,
-      edit: true,
-      newInfo: true
+      doc: getSchoolInfo(this.props),
+      edit: true
+    })
+  }
+closeWindow () {
+    this.setState({
+      view: 'full-view'
     })
   }
 
-
   render () {
+    let registerClass = classnames('register', this.state.view)
     return (
-        <div id='register' className='register'>
+        <div id='register' className={registerClass}>
+          <div className='addheader'>
+            <div className='large-12 columns'>
+              <h3 className='addtitle'><button className='button addtitle' type='button' onClick={this.addFee} disabled={this.state.view === 'split-view'}><i className="fi-add"></i>Add Fee</button></h3>
+            </div>
+          </div>
+        <FeeData
+            viewDoc={this.viewDoc}
+            {...this.props}
+            />
         <FeesForm
             updateDoc={this.updateDoc}
             updateState={this.updateState}
             clearCurrentDoc={this.clearCurrentDoc}
+            toggleEdit={this.toggleEdit}
+            closeWindow={this.closeWindow}
             {...this.state}
             {...this.props} />
         </div>
