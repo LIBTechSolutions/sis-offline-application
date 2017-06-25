@@ -15,24 +15,9 @@ export default class FeesForm extends React.Component {
   submitInfo (event) {
     event.preventDefault()
 
-    let feeInfo = Object.assign({}, this.props.doc)
-
-    if (!feeInfo._id) {
-      feeInfo._id = feeInfo.id
-    }
-
-    console.log('About to post to pouch...', feeInfo._id)
-
-    // Save to pouchdb
-    this.localdb.put(feeInfo, (err, result) => {
-      if (!err) {
-        console.log('Successfully posted to pouchdb!')
-        this.props.clearCurrentDoc()
-      } else {
-        console.log('Error saving to pouch...')
-        console.log(err)
-      }
-    })
+    let schoolDetail = Object.assign({}, this.props.doc)
+    this.props.completeInfo(schoolDetail)
+    this.props.saveInfo(schoolDetail)
   }
   canSubmit () {
     return this.form
@@ -46,6 +31,7 @@ export default class FeesForm extends React.Component {
     let {
       doc,
       user,
+      isNew,
       edit,
       updateDoc,
       updateState,
@@ -58,8 +44,19 @@ export default class FeesForm extends React.Component {
       <div className='student-form'>
         <form action='' onSubmit={this.submitInfo} ref={form => {this.form = form}}>
           <div className='student-form__container'>
-          <FeesInfo edit={edit} handleChange={updateDoc} {...doc.feeInfo} user={user}/>
-          <Toolbar edit={edit} clearCurrentDoc={clearCurrentDoc} toggleEdit={toggleEdit} closeWindow={closeWindow} canSubmit={this.state.canSubmit} />
+          <FeesInfo
+            edit={edit}
+            handleChange={updateDoc}
+            user={user}
+            {...doc.feeInfo} />
+          <Toolbar
+            edit={edit}
+            isNew={isNew}
+            clearCurrentDoc={clearCurrentDoc}
+            toggleEdit={toggleEdit}
+            closeWindow={closeWindow}
+            canSubmit={this.state.canSubmit}
+            {...doc.feeInfo} />
           </div>
         </form>
       </div>

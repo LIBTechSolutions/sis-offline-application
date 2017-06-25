@@ -5,7 +5,7 @@ import update from 'immutability-helper'
 import FeesForm from 'FeesForm'
 import FeeData from 'FeeDataPage'
 import classnames from 'classnames'
-import {getSchoolInfo} from '../schoolData'
+import {completeInfo, getSchoolInfo} from '../schoolData'
 
 
 
@@ -25,12 +25,15 @@ export default class Fees extends React.Component {
     this.addFee = this.addFee.bind(this)
     this.toggleEdit = this.toggleEdit.bind(this)
     this.closeWindow = this.closeWindow.bind(this)
+    this.saveInfo = this.saveInfo.bind(this)
 }
 
 viewDoc (doc) {
   return (e) => this.setState({
     doc,
+    isNew: false,
     edit: false,
+    hasChanged: false,
     view: 'split-view'
   })
 }
@@ -43,39 +46,49 @@ addFee () {
   this.setState({
     doc: getSchoolInfo(this.props),
     edit: true,
+    isNew: true,
+    hasChanged: false,
     view: 'split-view'
   })
 }
 
-updateDoc (dependentProps) {
-    return (e) => {
-      let key = e.target.name
-      let value = e.target.type === 'checkbox'
-                ? e.target.checked
-                : e.target.value
+saveInfo (doc) {
+    let action = this.state.isNew
+      ? this.props.actions.insertInfo
+      : this.props.actions.updateInfo
 
-      this.setState((prevState, props) => {
-        let doc = {
-          feeInfo: {
-            [key]: {$set: value}
-          }
-        }
+    action(doc)
 
-        if (typeof dependentProps === 'function') {
-          let calculatedProps = dependentProps(value)
-          for (let prop in calculatedProps) {
-            doc.feeInfo[prop] = {$set: calculatedProps[prop]}
+    this.setState({
+      doc,
+      hasChanged: false,
+      edit: false
+    })
+  }
+
+  updateDoc (dependentProps) {
+      return (e) => {
+        let key = e.target.name
+        let value = e.target.type === 'checkbox'
+                  ? e.target.checked
+                  : e.target.value
+
+        this.setState((prevState, props) => {
+          let doc = {
+            feeInfo: {
+              [key]: {$set: value}
+            }
           }
-        } else {
+
           for (let prop in dependentProps) {
             doc.feeInfo[prop] = {$set: dependentProps[prop](value)}
           }
-        }
 
-        return update(prevState, {doc, hasChanged: {$set: true}})
-      })
+          return update(prevState, {doc, hasChanged: {$set: true}})
+        })
+      }
     }
-  }
+
 
 updateState (stateUpdates) {
   this.setState((prevState, props) => {
@@ -106,6 +119,7 @@ closeWindow () {
           </div>
         <FeeData
             viewDoc={this.viewDoc}
+            selectedDetail={this.state.doc}
             {...this.props}
             />
         <FeesForm
@@ -114,6 +128,10 @@ closeWindow () {
             clearCurrentDoc={this.clearCurrentDoc}
             toggleEdit={this.toggleEdit}
             closeWindow={this.closeWindow}
+            saveInfo={this.saveInfo}
+            isNew={this.state.isNew}
+            hasChanged={this.state.hasChanged}
+            completeInfo={completeInfo}
             {...this.state}
             {...this.props} />
         </div>

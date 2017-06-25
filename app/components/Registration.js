@@ -5,7 +5,7 @@ import update from 'immutability-helper'
 import RegistrationForm from 'RegistrationForm'
 import RegistrationData from 'RegistrationDataPage'
 import classnames from 'classnames'
-import {getSchoolInfo} from '../schoolData'
+import {completeInfo, getSchoolInfo} from '../schoolData'
 
 
 
@@ -25,15 +25,33 @@ export default class Registration extends React.Component {
     this.addFee = this.addFee.bind(this)
     this.toggleEdit = this.toggleEdit.bind(this)
     this.closeWindow = this.closeWindow.bind(this)
+    this.saveInfo = this.saveInfo.bind(this)
   }
 
   viewDoc (doc) {
     return (e) => this.setState({
       doc,
+      isNew: false,
       edit: false,
+      hasChanged: false,
       view: 'split-view'
     })
   }
+
+  saveInfo (doc) {
+      let action = this.state.isNew
+        ? this.props.actions.insertInfo
+        : this.props.actions.updateInfo
+
+      action(doc)
+
+      this.setState({
+        doc,
+        hasChanged: false,
+        edit: false
+      })
+    }
+
   toggleEdit () {
       this.setState((prevState, props) => { return {edit: !prevState.edit} })
     }
@@ -42,6 +60,8 @@ export default class Registration extends React.Component {
     this.setState({
       doc: getSchoolInfo(this.props),
       edit: true,
+      hasChanged: false,
+      isNew: true,
       view: 'split-view'
     })
   }
@@ -60,15 +80,8 @@ export default class Registration extends React.Component {
             }
           }
 
-          if (typeof dependentProps === 'function') {
-            let calculatedProps = dependentProps(value)
-            for (let prop in calculatedProps) {
-              doc.registrationInfo[prop] = {$set: calculatedProps[prop]}
-            }
-          } else {
-            for (let prop in dependentProps) {
-              doc.registrationInfo[prop] = {$set: dependentProps[prop](value)}
-            }
+          for (let prop in dependentProps) {
+            doc.registrationInfo[prop] = {$set: dependentProps[prop](value)}
           }
 
           return update(prevState, {doc, hasChanged: {$set: true}})
@@ -105,6 +118,7 @@ clearCurrentDoc () {
           </div>
         <RegistrationData
             viewDoc={this.viewDoc}
+            selectedDetail={this.state.doc}
             {...this.props}
             />
         <RegistrationForm
@@ -114,6 +128,10 @@ clearCurrentDoc () {
             clearCurrentDoc={this.clearCurrentDoc}
             toggleEdit={this.toggleEdit}
             closeWindow={this.closeWindow}
+            saveInfo={this.saveInfo}
+            isNew={this.state.isNew}
+            hasChanged={this.state.hasChanged}
+            completeInfo={completeInfo}
             {...this.state}
             {...this.props} />
         </div>

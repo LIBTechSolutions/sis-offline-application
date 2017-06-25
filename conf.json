@@ -23,7 +23,7 @@
   },
   "db": {
     "school": {
-      "local": "sis-v01",
+      "local": "sis-v015",
       "remote": "http://localhost:5984/sis"
     }
   },

@@ -30,7 +30,11 @@ module.exports = {
       __dirname,
       'node_modules',
       './app/components',
-      './app/api'
+      './app/api',
+      './app/actions',
+      './app/constants',
+      './app/reducers',
+      './app/store'
     ],
     alias: {
       applicationStyles: 'app/styles/app.scss'

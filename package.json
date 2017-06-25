@@ -43,12 +43,16 @@
     "json-loader": "^0.5.4",
     "moment": "^2.18.1",
     "node-xlsx": "^0.7.4",
+    "pouch-redux-middleware": "^1.2.0",
     "pouchdb-browser": "^6.2.0",
+    "pouchdb-collate": "^6.2.0",
     "react": "^15.4.2",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.7.0"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",

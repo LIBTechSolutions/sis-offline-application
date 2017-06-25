@@ -1,9 +1,18 @@
 'use strict'
 
 import React from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import injectTapEventPlugin from 'react-tap-event-plugin'
 import Home from 'Home'
+import * as SchoolActions from 'details'
 
-export default class App extends React.Component {
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin()
+
+
+class App extends React.Component {
   constructor (props) {
     super(props)
 
@@ -37,13 +46,13 @@ export default class App extends React.Component {
     return !!this.state.user
   }
 
-  componentDidMount () {
-    this.startRemoteSync()
-  }
-
-  componentWillUnmount () {
-    this.stopRemoteSync()
-  }
+  // componentDidMount () {
+  //   this.startRemoteSync()
+  // }
+  //
+  // componentWillUnmount () {
+  //   this.stopRemoteSync()
+  // }
 
   render () {
     return <Home {...this.state} {...this.props}
@@ -69,3 +78,20 @@ export default class App extends React.Component {
       this.remoteSync && this.remoteSync.cancel()
     }
 }
+
+function mapStateToProps (state) {
+  return {
+    schoolDetails: state.schoolDetails
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    actions: bindActionCreators(SchoolActions, dispatch)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

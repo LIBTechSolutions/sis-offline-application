@@ -4,10 +4,6 @@ import React from 'react'
 import Registration from 'Registration'
 import Fees from 'Fees'
 import Grade from 'Grade'
-import GradeData from 'GradeDataPage'
-import FeeData from 'FeeDataPage'
-import RegistrationData from 'RegistrationDataPage'
-
 
 export default class Header extends React.Component {
   constructor (props) {
@@ -15,17 +11,11 @@ export default class Header extends React.Component {
     this.state = {
       registration: false,
       fee: false,
-      grade: false,
-      gradedata: false,
-      registrationdata: false,
-      feedata: false
+      grade: false
     }
     this.handleClick = this.handleClick.bind(this)
     this.handleFee = this.handleFee.bind(this)
     this.handleGrade = this.handleGrade.bind(this)
-    this.handleGradeData = this.handleGradeData.bind(this)
-    this.handleFeeData = this.handleFeeData.bind(this)
-    this.handleRegistrationData = this.handleRegistrationData.bind(this)
     this.logout = this.logout.bind(this)
   }
 
@@ -65,37 +55,6 @@ export default class Header extends React.Component {
       feedata: false
     })
   }
-  handleGradeData () {
-    this.setState({
-      gradedata: true,
-      fee: false,
-      registration: false,
-      grade: false,
-      registrationdata: false,
-      feedata: false
-    })
-  }
-  handleRegistrationData () {
-    this.setState({
-      registrationdata: true,
-      gradedata: false,
-      fee: false,
-      registration: false,
-      grade: false,
-      feedata: false
-    })
-  }
-  handleFeeData () {
-    this.setState({
-      feedata: true,
-      registrationdata: false,
-      gradedata: false,
-      fee: false,
-      registration: false,
-      grade: false
-    })
-  }
-
 
   render () {
 
@@ -117,20 +76,7 @@ export default class Header extends React.Component {
     				  </li>
     				</ul>
     			</li>
-    			<li className='menu-text'></li>
-    			<li>
-                	<ul className='dropdown menu' data-dropdown-menu>
-    				  <li>
-    				    <button className='button' type='button'>View</button>
-    				    <ul className='menu'>
-    				      <li><button className='button' type='button' onClick={this.handleRegistrationData}>Registration</button></li>
-    				      <li><button className='button' type='button' onClick={this.handleFeeData}>Fee</button></li>
-    				      <li><button className='button' type='button' onClick={this.handleGradeData}>Grade</button></li>
-    				    </ul>
-    				  </li>
     				</ul>
-    			</li>
-    		    </ul>
       		</div>
           <div className='top-bar-right'>
             <ul className='menu'>
@@ -148,12 +94,9 @@ export default class Header extends React.Component {
           </div>
       </div>
       <div>
-        {this.state.registration ? <Registration regDb={this.regDb} {...this.props}/>: null}
-        {this.state.fee ? <Fees feeDb={this.feeDb} {...this.props}/>: null}
-        {this.state.grade ? <Grade gradeDb={this.gradeDb} {...this.props}/>: null}
-        {this.state.gradedata ? <GradeData gradeDb={this.gradeDb} viewDoc={this.viewDoc} {...this.props}/>: null}
-        {this.state.registrationdata ? <RegistrationData regDb={this.regDb} viewDoc={this.viewDoc} {...this.props}/>: null}
-        {this.state.feedata ? <FeeData feeDb={this.feeDb} {...this.props}/>: null}
+        {this.state.registration ? <Registration {...this.props}/>: null}
+        {this.state.fee ? <Fees {...this.props}/>: null}
+        {this.state.grade ? <Grade {...this.props}/>: null}
       </div>
     </div>
     )

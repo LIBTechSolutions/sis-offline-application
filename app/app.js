@@ -3,21 +3,16 @@
 import React from 'react'
 import pouchdb from 'pouchdb-browser'
 import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import configureStore from 'configureStore'
 import App from 'App'
 
 import config from '../conf.json'
 
 
-// Load foundations
-import 'jquery'
-import 'foundation-sites'
-
-$(document).ready(function ($) {
-  $(document).foundation();
-})
-
 const localdb = new pouchdb(config.db.school.local)
 const remoteDb = config.db.school.remote
+const store = configureStore(localdb)
 
 
 // app css
@@ -25,12 +20,12 @@ require('applicationStyles')
 
 
 render(
-  <div>
+  <Provider store={store}>
     <App
       config={config}
       localdb={localdb}
       remoteDb={remoteDb}
       />
-  </div>,
+  </Provider>,
   document.getElementById('app')
 )

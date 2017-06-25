@@ -1,13 +1,15 @@
-'use strict'
-
+import { toDateString, generateId } from './utils'
+import { toIndexableString } from 'pouchdb-collate'
 import uuid from 'uuid/v4'
-import {toDate} from './utils'
+
 
 export function getSchoolInfo ({user}) {
+
   return {
     id: uuid(),
     user: user.user,
-    created: toDate(),
+    created: new Date().getTime(),
+    regID: generateId(),
     registrationInfo: {
       registrationtype: '',
       firstname: '',
@@ -55,4 +57,27 @@ export function getSchoolInfo ({user}) {
      amount: ''
     }
   }
+}
+
+
+export function getIDSRId (schoolDetail) {
+  const info = schoolDetail.registrationInfo
+  return `${info.currentClass} - ${info.Position} - ${info.sex}`
+}
+
+
+export function getId (schoolDetail) {
+  return schoolDetail.id
+}
+
+
+export function completeInfo (schoolDetail) {
+  if (!schoolDetail._id) {
+    schoolDetail._id = getId(schoolDetail)
+  }
+
+  schoolDetail.registrationInfo.idsrId = getIDSRId(schoolDetail)
+  schoolDetail.complete = true
+
+  return schoolDetail
 }
